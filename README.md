@@ -10,7 +10,11 @@ This demo shows how to protect a payment endpoint from duplicate processing usin
 
 ```bash
 # build & start services
- docker-compose up --build
+# copy .env.example to .env
+cp .env.example .env
+# edit .env
+# run docker-compose
+docker-compose up --build
 ```
 
 The API will be available at <http://localhost:8000/docs>.
@@ -32,8 +36,9 @@ Send the same request again with the same key – you will get **exactly** the s
   1. Looks up cached response in Redis (`idem:{key}`).  
   2. If found ⇒ returns it.  
   3. Otherwise attempts `SETNX` a temporary `LOCK`.   
+     * Wait for the first request to finish and save the result (idempotency)
      * If lock fails ⇒ another request in flight ⇒ 409.
-  4. After downstream handler succeeds, save `{hash, response}` with TTL (default 24 h).
+  4. After downstream handler succeeds, save `{hash, response}` with TTL (default 24 h in .env).
 
 * Concurrency safety relies on single-atomic `SETNX`.
 
