@@ -13,8 +13,8 @@ class PaymentStatus(str, Enum):
 
 
 class PaymentRequest(BaseModel):
-    amount: PositiveFloat = Field(..., example=10.5)
-    currency: str = Field("USD", min_length=3, max_length=3, example="USD")
+    amount: PositiveFloat = Field(..., json_schema_extra={"example": 100.0})
+    currency: str = Field("USD", min_length=3, max_length=3, json_schema_extra={"example": "USD"})
 
 
 class PaymentResponse(BaseModel):
