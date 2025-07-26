@@ -35,6 +35,7 @@ async def save_response(idem_key: str, request_hash: str, response_json: Dict[st
 async def get_saved_response(idem_key: str) -> Optional[Dict[str, Any]]:
     client = await get_redis()
     raw = await client.get(await _key(idem_key))
+    print(raw)
     if raw is None or raw == "LOCK":
         return None
     try:

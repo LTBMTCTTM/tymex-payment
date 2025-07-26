@@ -16,6 +16,7 @@ app = FastAPI(title="Payment API with Idempotency")
 
 async def idempotency_middleware(request: Request, call_next: Callable):
     idem_key = request.headers.get("Idempotency-Key")
+    print(idem_key)
     if not idem_key:
         # No idempotency header: proceed normally
         return await call_next(request)
