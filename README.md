@@ -43,8 +43,14 @@ Send the same request again with the same key – you will get **exactly** the s
 * Concurrency safety relies on single-atomic `SETNX`.
 
 ## Tests
+Access to docker container:
 
 ```bash
-pip install -r requirements.txt pytest
-pytest
+docker-compose exec `container_name` bash
+```
+
+Run tests:
+
+```bash
+cd app & pytest -vv
 ```
